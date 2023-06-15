@@ -1,6 +1,13 @@
 <template>
-  <div>
-    <h1>{{ msg }}</h1>    
+  <div class="container">
+
+    <h2 class="text-center mt-5">{{ msg }}</h2>
+
+      <!-- Input -->
+    <div class="d-flex">
+      <input type="text" class="form-control" placeholder="Enter task">
+    </div>
+    
   </div>
 </template>
 
@@ -9,7 +16,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      msg: 'Welcome to My App'
+      msg: 'Welcome to My Todo App'
     }
   }
 }
