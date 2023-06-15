@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       msg: 'Welcome to My Todo App',
-      task: 'Hello world',
+      task: '',
       tasks: [
         {
           name: 'Read Vuejs2.0 documentation',
@@ -68,7 +68,14 @@ export default {
   },
   methods: {
     submitTask(){
-      console.log(this.task)
+      if(this.task.length === 0) return;
+
+      this.tasks.push(
+        {
+        name: this.task,
+        status: 'to-do'
+        }
+      )
     }
   }
 }
