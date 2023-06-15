@@ -5,8 +5,8 @@
 
     <!-- Input -->
     <div class="d-flex">
-      <input type="text" class="form-control" placeholder="Enter task">
-      <button class="btn btn-warning rounded-0">SUBMIT</button>
+      <input v-model="task" type="text" class="form-control" placeholder="Enter task">
+      <button @click="submitTask" class="btn btn-warning rounded-0">SUBMIT</button>
     </div>
 
     <!-- Task Table -->
@@ -21,7 +21,7 @@
       </thead>
       <tbody>
         <tr v-for="(task, index) in tasks" :key="index">
-          <th>{{ task.name }}</th>
+          <td>{{ task.name }}</td>
           <td>{{ task.status }}</td>
           <td>
             <div class="text-center">
@@ -49,6 +49,7 @@ export default {
   data() {
     return {
       msg: 'Welcome to My Todo App',
+      task: 'Hello world',
       tasks: [
         {
           name: 'Read Vuejs2.0 documentation',
@@ -63,6 +64,11 @@ export default {
           status: 'in-progress'
         }
       ]
+    }
+  },
+  methods: {
+    submitTask(){
+      console.log(this.task)
     }
   }
 }
