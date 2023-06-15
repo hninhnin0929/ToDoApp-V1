@@ -20,9 +20,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th>Read Vuejs2.0 documentation</th>
-          <td>To-do</td>
+        <tr v-for="(task, index) in tasks" :key="index">
+          <th>{{ task.name }}</th>
+          <td>{{ task.status }}</td>
           <td>
             <div class="text-center">
               <span class="fa fa-pen"></span>
@@ -43,9 +43,26 @@
 <script>
 export default {
   name: 'Home',
+  props: {
+    
+  },
   data() {
     return {
-      msg: 'Welcome to My Todo App'
+      msg: 'Welcome to My Todo App',
+      tasks: [
+        {
+          name: 'Read Vuejs2.0 documentation',
+          status: 'to-do'
+        },
+        {
+          name: 'Learning korean language',
+          status: 'to-do'
+        },
+        {
+          name: 'Creating vue project',
+          status: 'in-progress'
+        }
+      ]
     }
   }
 }
