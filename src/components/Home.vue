@@ -22,7 +22,11 @@
       <tbody>
         <tr v-for="(task, index) in tasks" :key="index">
           <td>{{ task.name }}</td>
-          <td>{{ task.status }}</td>
+          <td>
+            <span @click="changeStatus(index)" class="pointer">
+              {{ task.status }}
+            </span>
+          </td>
           <td>
             <div class="text-center" @click="updateTask(index)">
               <span class="fa fa-pen"></span>
@@ -51,6 +55,7 @@ export default {
       msg: 'Welcome to My Todo App',
       task: '',
       editedTask: null,
+      availableStatuses: ['to-do', 'in-progress', 'finished'],
       tasks: [
         {
           name: 'Read Vuejs2.0 documentation',
@@ -96,6 +101,12 @@ export default {
       this.editedTask = index;
     },
 
+    changeStatus(index){
+      let nextIndex = this.availableStatuses.indexOf(this.tasks[index].status);      
+      if(++nextIndex > 2) nextIndex = 0;      
+      this.tasks[index].status = this.availableStatuses[nextIndex];
+    }
+
   }
 }
 </script>
@@ -105,5 +116,8 @@ export default {
 h1,
 h2 {
   font-weight: normal;
+}
+.pointer {
+  cursor: pointer;
 }
 </style>
