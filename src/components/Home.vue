@@ -76,6 +76,9 @@ export default {
         status: 'to-do'
         }
       )
+
+      this.task = '';
+      
     },
 
     deleteTask(index){
