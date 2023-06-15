@@ -6,8 +6,9 @@
       <!-- Input -->
     <div class="d-flex">
       <input type="text" class="form-control" placeholder="Enter task">
+      <button class="btn btn-warning rounded-0">SUBMIT</button>
     </div>
-    
+
   </div>
 </template>
 
