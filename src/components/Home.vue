@@ -21,10 +21,15 @@
       </thead>
       <tbody>
         <tr v-for="(task, index) in tasks" :key="index">
-          <td>{{ task.name }}</td>
           <td>
-            <span @click="changeStatus(index)" class="pointer">
-              {{ task.status }}
+            <span :class="{'finished': task.status === 'finished'}">
+              {{ task.name }}
+            </span>
+          </td>
+          <td style="width: 120px;">
+            <span @click="changeStatus(index)" class="pointer"
+              >
+              {{ firstCharUpper(task.status) }}
             </span>
           </td>
           <td>
@@ -105,6 +110,10 @@ export default {
       let nextIndex = this.availableStatuses.indexOf(this.tasks[index].status);      
       if(++nextIndex > 2) nextIndex = 0;      
       this.tasks[index].status = this.availableStatuses[nextIndex];
+    },
+
+    firstCharUpper(str){
+      return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
   }
@@ -120,4 +129,8 @@ h2 {
 .pointer {
   cursor: pointer;
 }
+.finished {
+  text-decoration: line-through;
+}
+
 </style>
