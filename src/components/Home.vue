@@ -53,74 +53,86 @@
 </template>
 
 <script>
-export default {
-  name: 'Home',
-  props: {
+
+  const STORAGE_KEY = 'vue-todo-app-storage';
+
+  export default {
+    name: 'Home',
     
-  },
-  data() {
-    return {
-      msg: 'Welcome to My Todo App',
-      task: '',
-      editedTask: null,
-      availableStatuses: ['to-do', 'in-progress', 'finished'],
-      tasks: [
-        {
-          name: 'Read Vuejs2.0 documentation',
-          status: 'to-do'
-        },
-        {
-          name: 'Learning korean language',
-          status: 'to-do'
-        },
-        {
-          name: 'Creating vue project',
-          status: 'in-progress'
-        }
-      ]
-    }
-  },
-  methods: {
-    submitTask(){
-      if(this.task.length === 0) return;
-
-      if(this.editedTask === null){
-        this.tasks.push(
-          {
-          name: this.task,
-          status: 'to-do'
-          }
-        )
-      }else{             
-        this.tasks[this.editedTask].name = this.task;
-        this.editedTask = null;
-      }
+    props: {
       
-      this.task = '';
-
     },
-
-    deleteTask(index){
-      this.tasks.splice(index, 1);
+    data() {
+      return {      
+        msg: 'Welcome to My Todo App',
+        task: '',
+        editedTask: null,
+        availableStatuses: ['to-do', 'in-progress', 'finished'],
+        tasks: [
+          // {
+          //   name: 'Read Vuejs2.0 documentation',
+          //   status: 'to-do'
+          // },
+          // {
+          //   name: 'Learning korean language',
+          //   status: 'to-do'
+          // },
+          // {
+          //   name: 'Creating vue project',
+          //   status: 'in-progress'
+          // }
+        ]
+      }
     },
-
-    updateTask(index){
-      this.task = this.tasks[index].name;
-      this.editedTask = index;
+    created(){
+      console.log("this is created func");    
+      this.tasks = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     },
+    methods: {
+      submitTask(){
+        if(this.task.length === 0) return;
 
-    changeStatus(index){
-      let nextIndex = this.availableStatuses.indexOf(this.tasks[index].status);      
-      if(++nextIndex > 2) nextIndex = 0;      
-      this.tasks[index].status = this.availableStatuses[nextIndex];
-    },
+        if(this.editedTask === null){
+          this.tasks.push(
+            {
+            name: this.task,
+            status: 'to-do'
+            }
+          )
+          
+        }else{             
+          this.tasks[this.editedTask].name = this.task;
+          this.editedTask = null;
+        }
 
-    firstCharUpper(str){
-      return str.charAt(0).toUpperCase() + str.slice(1);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks));
+        this.task = '';
+      },
+
+      deleteTask(index){
+        this.tasks.splice(index, 1);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks));
+      },
+
+      updateTask(index){
+        this.task = this.tasks[index].name;
+        this.editedTask = index;        
+      },
+
+      changeStatus(index){
+        let nextIndex = this.availableStatuses.indexOf(this.tasks[index].status);      
+        if(++nextIndex > 2) nextIndex = 0;      
+        this.tasks[index].status = this.availableStatuses[nextIndex];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks));
+      },
+
+      firstCharUpper(str){
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      },
+      
+
     }
-
   }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
