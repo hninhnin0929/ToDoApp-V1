@@ -60,14 +60,12 @@
 
 <script>
 
-  import navbar from "./Navbar";
 import Navbar from "./Navbar.vue";
 
   const STORAGE_KEY = 'vue-todo-app-storage';
 
   export default {
     components: {
-    navbar,
     Navbar
 },
     name: 'Home',
