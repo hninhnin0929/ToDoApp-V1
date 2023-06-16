@@ -104,9 +104,10 @@
           this.tasks[this.editedTask].name = this.task;
           this.editedTask = null;
         }
-
+        
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.tasks));
         this.task = '';
+
       },
 
       deleteTask(index){
