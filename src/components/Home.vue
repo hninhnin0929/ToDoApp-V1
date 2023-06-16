@@ -6,11 +6,13 @@
     <!-- Input -->
     <div class="d-flex">
       <input v-model="task" type="text" class="form-control" placeholder="Enter task">
-      <button @click="submitTask" class="btn btn-warning rounded-0">SUBMIT</button>
+      <button @click="submitTask" class="btn btn-success rounded-0">ADD</button>
     </div>
 
+    <h5 class=" mt-5">Todo's</h5>
+
     <!-- Task Table -->
-    <table class="table table-bordered mt-5">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th scope="col">Task</th>
@@ -139,8 +141,9 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1,
-h2 {
+h2,h5 {
   font-weight: normal;
+  color: rgb(32, 178, 44);
 }
 .pointer {
   cursor: pointer;
