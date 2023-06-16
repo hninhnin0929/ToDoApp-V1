@@ -1,64 +1,75 @@
 <template>
-  <div class="container">
+  <div class="main-wrapper">
 
-    <h2 class="text-center mt-5">{{ msg }}</h2>
+    <Navbar></Navbar>
+    <div class="container card shadow shadow-lg--hover">
 
-    <!-- Input -->
-    <div class="d-flex">
-      <input v-model="task" type="text" class="form-control" placeholder="Enter task">
-      <button @click="submitTask" class="btn btn-success rounded-0">ADD</button>
+      <h6 class="mt-3">{{ msg }}</h6>
+
+      <!-- Input -->
+      <div class="d-flex mt-5">
+        <input v-model="task" type="text" class="form-control add-task-field" placeholder="Enter task" v-on:keydown.enter="submitTask">
+        <button @click="submitTask" class="btn btn-success rounded-0">ADD</button>
+        
+      </div>      
+
+      <!-- Task Table -->
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Status</th>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col" class="text-center">#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(task, index) in tasks" :key="index">
+            <td>
+              <span :class="{'finished': task.status === 'finished'}">
+                {{ task.name }}
+              </span>
+            </td>
+            <td style="width: 120px;">
+              <span @click="changeStatus(index)" class="pointer"
+                :class="{'text-danger': task.status === 'to-do', 
+                'text-warning': task.status === 'in-progress',
+                'text-success': task.status === 'finished'
+              }">
+                {{ firstCharUpper(task.status) }}
+              </span>
+            </td>
+            <td>
+              <div class="text-center" @click="updateTask(index)">
+                <span class="fa fa-pen"></span>
+              </div>
+            </td>
+            <td>
+              <div class="text-center" @click="deleteTask(index)">
+                <span class="fa fa-trash"></span>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
     </div>
-
-    <h5 class=" mt-5">Todo's</h5>
-
-    <!-- Task Table -->
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Task</th>
-          <th scope="col">Status</th>
-          <th scope="col" class="text-center">#</th>
-          <th scope="col" class="text-center">#</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(task, index) in tasks" :key="index">
-          <td>
-            <span :class="{'finished': task.status === 'finished'}">
-              {{ task.name }}
-            </span>
-          </td>
-          <td style="width: 120px;">
-            <span @click="changeStatus(index)" class="pointer"
-              :class="{'text-danger': task.status === 'to-do', 
-              'text-warning': task.status === 'in-progress',
-              'text-success': task.status === 'finished'
-            }">
-              {{ firstCharUpper(task.status) }}
-            </span>
-          </td>
-          <td>
-            <div class="text-center" @click="updateTask(index)">
-              <span class="fa fa-pen"></span>
-            </div>
-          </td>
-          <td>
-            <div class="text-center" @click="deleteTask(index)">
-              <span class="fa fa-trash"></span>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
   </div>
+  
 </template>
 
 <script>
 
+  import navbar from "./Navbar";
+import Navbar from "./Navbar.vue";
+
   const STORAGE_KEY = 'vue-todo-app-storage';
 
   export default {
+    components: {
+    navbar,
+    Navbar
+},
     name: 'Home',
     
     props: {
@@ -66,7 +77,7 @@
     },
     data() {
       return {      
-        msg: 'Welcome to My Todo App',
+        msg: 'TODO-LIST',
         task: '',
         editedTask: null,
         availableStatuses: ['to-do', 'in-progress', 'finished'],
@@ -92,6 +103,7 @@
     },
     methods: {
       submitTask(){
+        console.log("submit");
         if(this.task.length === 0) return;
 
         if(this.editedTask === null){
@@ -140,8 +152,13 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.main-wrapper {
+  height: 100%;
+  padding-top: 50px;
+}
+
 h1,
-h2,h5 {
+h2,h6 {
   font-weight: normal;
   color: rgb(32, 178, 44);
 }
@@ -150,6 +167,15 @@ h2,h5 {
 }
 .finished {
   text-decoration: line-through;
+}
+.add-task-field{
+  border-radius: 0;
+  /* border: none; */
+  background: transparent;
+  border: 1px solid #11cdef;
+}
+th {
+  background-color: #c2e2c6;
 }
 
 </style>
